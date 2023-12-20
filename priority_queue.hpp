@@ -5,7 +5,7 @@
 
 template <typename T>
 struct node {
-    T value;
+	T value;
 	int priority;
 };
 
@@ -18,12 +18,12 @@ private:
 	int m_capacity;
 public:
 	priority_queue(int cap);
-
+	
 	~priority_queue();
-
-    void enqueue(int value, int priority);
-    int top();
-    void dequeue();
+	
+	void enqueue(int value, int priority);
+	int top();
+	void dequeue();
 	bool empty() const;
 	int size() const;
 	void pop();
@@ -61,8 +61,7 @@ int priority_queue<T>::top() {
 		if (highest_priority == pr[i].priority && index > -1 && pr[index].value < pr[i].value) {
 			highest_priority = pr[i].priority;
 			index = i;
-		}
-		else if (highest_priority < pr[i].priority) {
+		} else if (highest_priority < pr[i].priority) {
 			highest_priority = pr[i].priority;
 			index = i;
 		}
@@ -94,60 +93,59 @@ int priority_queue<T>::size() const {
 
 template <typename T>
 void priority_queue<T>::pop() {
-    if (m_size == 0) {
-        return;
-    }
-
-    int max_iondex = 0;
-    int max_priority = pr[0].priority;
-
-    for (int i = 1; i < m_size; ++i) {
-        if (pr[i].priority > max_priority) {
-            max_priority = pr[i].priority;
-            max_iondex = i;
-        }
-    }
-
-    for (int i = max_iondex; i < m_size - 1; ++i) {
-        pr[i] = pr[i + 1];
-    }
-
-    --m_size;
+	if (m_size == 0) {
+		return;
+	}
+	
+	int max_iondex = 0;
+	int max_priority = pr[0].priority;
+	
+	for (int i = 1; i < m_size; ++i) {
+		if (pr[i].priority > max_priority) {
+		    max_priority = pr[i].priority;
+		    max_iondex = i;
+		}
+	}
+	
+	for (int i = max_iondex; i < m_size - 1; ++i) {
+		pr[i] = pr[i + 1];
+	}
+	
+	--m_size;
 }
 
 
 template <typename T>
 void priority_queue<T>::push(const T& value, int priority) {
-    if (m_size >= m_capacity) {
-        return;
-    }
-
-    node<T> new_node;
-    new_node.value = value;
-    new_node.priority = priority;
-
-    int insert_index = 0;
-    while (insert_index < m_size && pr[insert_index].priority >= priority) {
-        insert_index++;
-    }
-
-    for (int i = m_size; i > insert_index; i--) {
-        pr[i] = pr[i - 1];
-    }
-
-    pr[insert_index] = new_node;
-
-    
+	if (m_size >= m_capacity) {
+		return;
+	}
+	
+	node<T> new_node;
+	new_node.value = value;
+	new_node.priority = priority;
+	
+	int insert_index = 0;
+	while (insert_index < m_size && pr[insert_index].priority >= priority) {
+		insert_index++;
+	}
+	
+	for (int i = m_size; i > insert_index; i--) {
+		pr[i] = pr[i - 1];
+	}
+	
+	pr[insert_index] = new_node;
+	
 	++m_size;
 }
 
 template <typename T>
 T priority_queue<T>::at(int index) {
-    if (index < 0 || index > m_size) {
-        return pr[0].value;
-    }
-
-    return pr[index].value;
+	if (index < 0 || index > m_size) {
+		return pr[0].value;
+	}
+	
+	return pr[index].value;
 }
 
 #endif
