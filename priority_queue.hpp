@@ -57,7 +57,6 @@ int priority_queue<T>::top() {
 	int index = -1;
 
 	for (int i = 0; i <= m_size; ++i) {
-
 		if (highest_priority == pr[i].priority && index > -1 && pr[index].value < pr[i].value) {
 			highest_priority = pr[i].priority;
 			index = i;
