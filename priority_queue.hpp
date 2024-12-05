@@ -45,6 +45,11 @@ priority_queue<T>::~priority_queue() {
 
 template <typename T>
 void priority_queue<T>::enqueue(int value, int priority) {
+	if (m_size >= m_capacity) {
+        std::cout << "Overflow: Could not insert element\n";
+        return;
+    }
+
 	++m_size;
 
 	pr[m_size].value = value;
@@ -53,21 +58,25 @@ void priority_queue<T>::enqueue(int value, int priority) {
 
 template <typename T>
 int priority_queue<T>::top() {
-	int highest_priority = INT_MIN;
-	int index = -1;
-
-	for (int i = 0; i <= m_size; ++i) {
-		if (highest_priority == pr[i].priority && index > -1 && pr[index].value < pr[i].value) {
-			highest_priority = pr[i].priority;
-			index = i;
-		} else if (highest_priority < pr[i].priority) {
-			highest_priority = pr[i].priority;
-			index = i;
-		}
+    if (m_size <= 0) {
+        std::cout << "Queue is empty.\n";
+        return -1;
 	}
 
-	return index;
+    int highest_priority = INT_MIN;
+    int index = -1;
+
+    for (int i = 0; i < m_size; ++i) {
+        if (pr[i].priority > highest_priority || 
+            (pr[i].priority == highest_priority && pr[i].value > pr[index].value)) {
+            highest_priority = pr[i].priority;
+            index = i;
+        }
+    }
+
+    return index;
 }
+
 
 template <typename T>
 void priority_queue<T>::dequeue() {
